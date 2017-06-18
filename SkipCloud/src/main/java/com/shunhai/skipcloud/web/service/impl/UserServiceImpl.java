@@ -2,6 +2,7 @@ package com.shunhai.skipcloud.web.service.impl;
 
 import javax.annotation.Resource;
 
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.stereotype.Service;
 
 import com.shunhai.skipcloud.core.generic.GenericDao;
@@ -52,6 +53,18 @@ public class UserServiceImpl extends GenericServiceImpl<User, Long> implements U
 	@Override
 	public User selectByUsername(String username) {
 		return userMapper.selectByUsername(username);
+	}
+
+	@Override
+	public boolean selectByUsername(User user) {
+		String cryptedPwd = new Md5Hash(user.getPassword()).toString();
+		user.setPassword(cryptedPwd);
+		int index = userMapper.insert(user);
+		if(index>0){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 

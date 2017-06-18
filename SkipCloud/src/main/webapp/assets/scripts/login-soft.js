@@ -250,6 +250,8 @@ var Login = function() {
             },
 
             submitHandler : function(form) {
+            	var passwordInput = $('[name="register_password"]');
+                passwordInput.val(sha256_digest(passwordInput.val()));
                 form.submit();
             }
         });
@@ -277,7 +279,6 @@ var Login = function() {
     return {
         // main function to initiate the module
         init : function() {
-        	alert("AAA");
             console.log(12);
             handleLogin();
             handleForgetPassword();

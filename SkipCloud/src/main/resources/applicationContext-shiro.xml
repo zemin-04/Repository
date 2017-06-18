@@ -17,11 +17,21 @@
                 <!-- 静态资源允许访问 -->
                 /app/** = anon
                 /assets/** = anon
-                <!-- 登录页允许访问 -->
+                <!-- 登录页,注册页允许访问 -->
                 /rest/user/login = anon
+                /rest/user/register = anon
                 <!-- 其他资源需要认证 -->
                 /** = authc
             </value>
+        </property>
+    </bean>
+
+	<!-- 登录密码比对，使用加密方式MD5 -->
+	<bean id="SecurityRealm" class="com.shunhai.skipcloud.web.security.SecurityRealm">
+        <property name="credentialsMatcher">
+            <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+                <property name="hashAlgorithmName" value="MD5"/>
+            </bean>
         </property>
     </bean>
 

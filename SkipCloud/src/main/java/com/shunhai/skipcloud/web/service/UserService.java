@@ -9,7 +9,7 @@ import com.shunhai.skipcloud.web.model.User;
 public interface UserService extends GenericService<User, Long> {
 
     /**
-     * 用户验证
+     * 用户登录验证
      * @param user
      * @return
      */
@@ -21,4 +21,11 @@ public interface UserService extends GenericService<User, Long> {
      * @return
      */
     User selectByUsername(String username);
+
+    /**
+     * 用户注册
+     * @param user
+     * @return true代表插入成功 ;false代表插入失败
+     */
+    boolean selectByUsername(User user);
 }
