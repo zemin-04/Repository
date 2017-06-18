@@ -131,7 +131,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:;">
+                                    <a href="rest/permission/permissionList">
                                         权限管理
                                     </a>
                                 </li>
@@ -302,7 +302,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
         <!-- BEGIN FOOTER -->
         <div class="footer">
             <div class="footer-inner">
-                2014 &copy; Quick4j By Eliteams.
+                2017 &copy; SkipCloud By zmdeng.
             </div>
             <div class="footer-tools">
                 <span class="go-top"><i class="fa fa-angle-up"></i></span>
@@ -327,6 +327,12 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
         <script src="assets/scripts/app.js" type="text/javascript"></script>
         <script type="text/javascript" src="app/js/index.js"></script>
+
+        <!--Begin Test -->
+        <script type="text/javascript">
+        	alert("SSS");
+        </script>
+		<!--End Test -->
 
         <!-- <script data-main="app/js/main" src="app/lib/requirejs/require.js"></script> -->
     </body>
