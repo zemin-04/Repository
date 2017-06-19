@@ -125,7 +125,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 	</form>
 	<!-- END FORGOT PASSWORD FORM -->
 	<!-- BEGIN REGISTRATION FORM -->
-	<form class="register-form" action="index.html" method="post">
+	<form class="register-form" action="rest/user/register" method="post">
 		<h3>注  册</h3>
 		<p>
 			 请输入您的个人信息:
@@ -134,7 +134,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 			<label class="control-label visible-ie8 visible-ie9">全名</label>
 			<div class="input-icon">
 				<i class="fa fa-font"></i>
-				<input class="form-control placeholder-no-fix" type="text" placeholder="全名" name="fullname"/>
+				<input class="form-control placeholder-no-fix" type="text" placeholder="全名" name="fullname" id="fullname"/>
 			</div>
 		</div>
 		<div class="form-group">
@@ -142,26 +142,26 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 			<label class="control-label visible-ie8 visible-ie9">Email</label>
 			<div class="input-icon">
 				<i class="fa fa-envelope"></i>
-				<input class="form-control placeholder-no-fix" type="text" placeholder="Email" name="email"/>
+				<input class="form-control placeholder-no-fix" type="text" placeholder="Email" name="email" id="email"/>
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="control-label visible-ie8 visible-ie9">地址</label>
 			<div class="input-icon">
 				<i class="fa fa-check"></i>
-				<input class="form-control placeholder-no-fix" type="text" placeholder="地址" name="address"/>
+				<input class="form-control placeholder-no-fix" type="text" placeholder="地址" name="address" id="address"/>
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="control-label visible-ie8 visible-ie9">城市</label>
 			<div class="input-icon">
 				<i class="fa fa-location-arrow"></i>
-				<input class="form-control placeholder-no-fix" type="text" placeholder="城市" name="city"/>
+				<input class="form-control placeholder-no-fix" type="text" placeholder="城市" name="city" id="city"/>
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="control-label visible-ie8 visible-ie9">国家</label>
-			<select name="country" id="select2_sample4" class="select2 form-control">
+			<select name="country" id="select2_sample4" class="select2 form-control" id="country">
 				<option value=""></option>
 				<option value="AF">Afghanistan</option>
 				<option value="AL">Albania</option>
@@ -407,7 +407,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 			<label class="control-label visible-ie8 visible-ie9">用户名</label>
 			<div class="input-icon">
 				<i class="fa fa-user"></i>
-				<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="用户名" name="username"/>
+				<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="用户名" name="username" id="username"/>
 			</div>
 		</div>
 		<div class="form-group">

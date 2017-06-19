@@ -1,5 +1,7 @@
 package com.shunhai.skipcloud.web.controller;
 
+import java.util.Date;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -10,6 +12,7 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,12 +59,14 @@ public class UserController {
                 return "login";
             }
             System.out.println(user.getUsername()+"正在进行身份认证,密码为："+user.getPassword());
+            String passwordNew = new Md5Hash(user.getPassword()).toString();
+            System.out.println("后端加密为："+passwordNew);
             // 身份验证
-            subject.login(new UsernamePasswordToken(user.getUsername(), user.getPassword()));
+            subject.login(new UsernamePasswordToken(user.getUsername(), passwordNew));
             // 验证成功在Session中保存用户信息
             final User authUserInfo = userService.selectByUsername(user.getUsername());
             request.getSession().setAttribute("userInfo", authUserInfo);
-            System.out.println(user.getUsername()+"登陆成功,密码为："+user.getPassword());
+            System.out.println(user.getUsername()+"登陆成功,密码为："+authUserInfo.getPassword());
         } catch (AuthenticationException e) {
             // 身份验证失败
             model.addAttribute("error", "用户名或密码错误 ！");
@@ -104,5 +109,19 @@ public class UserController {
     @RequiresPermissions(value = PermissionSign.USER_CREATE)
     public String create() {
         return "拥有user:create权限,能访问";
+    }
+    
+    /**
+     * 用户注册
+     */
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public String register(@Valid User user, BindingResult result, Model model, HttpServletRequest request) {
+    	System.out.println("注册时SHA256加密后密码为："+user.getPassword()+" 姓名是："+user.getFullname());
+    	user.setState("正常");
+    	user.setCreateTime(new Date());
+    	if(userService.insertUser(user))
+    		return "login";
+    	else
+    		return "error";
     }
 }

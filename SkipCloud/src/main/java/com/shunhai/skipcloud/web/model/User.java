@@ -12,10 +12,32 @@ public class User {
     private String state;
 
     private Date createTime;
+    
+    private String fullname;
+    
+    private String email;
+    
+    private String address;
+    
+    private String city;
+    
+    private String country;
+    
 
     public User() {
 	}
 
+	public User(String username, String password,String fullname,String email,
+			String address,String city,String country) {
+		this.username = username;
+		this.password = password;
+		this.fullname = fullname;
+		this.email = email;
+		this.address = address;
+		this.city = city;
+		this.country = country;
+	}
+	
 	public User(String username, String password) {
 		this.username = username;
 		this.password = password;
@@ -60,4 +82,44 @@ public class User {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
+	public String getFullname() {
+		return fullname;
+	}
+
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
 }

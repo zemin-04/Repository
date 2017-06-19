@@ -250,7 +250,7 @@ var Login = function() {
             },
 
             submitHandler : function(form) {
-            	var passwordInput = $('[name="register_password"]');
+            	var passwordInput = $('#register_password');
                 passwordInput.val(sha256_digest(passwordInput.val()));
                 form.submit();
             }

@@ -23,9 +23,11 @@
   </delete>
   <insert id="insert" parameterType="com.shunhai.skipcloud.web.model.User" >
     insert into user (id, username, password,
-      state, create_time)
+      state, create_time,fullname,email,address,city,country)
     values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=CHAR},
-      #{state,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+      #{state,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{fullname,jdbcType=VARCHAR},
+      #{email,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},#{city,jdbcType=VARCHAR},
+      #{country,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.shunhai.skipcloud.web.model.User" >
     insert into user

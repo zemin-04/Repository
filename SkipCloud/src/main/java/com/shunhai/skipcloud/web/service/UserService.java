@@ -27,5 +27,5 @@ public interface UserService extends GenericService<User, Long> {
      * @param user
      * @return true代表插入成功 ;false代表插入失败
      */
-    boolean selectByUsername(User user);
+    boolean insertUser(User user);
 }

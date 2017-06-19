@@ -56,7 +56,7 @@ public class UserServiceImpl extends GenericServiceImpl<User, Long> implements U
 	}
 
 	@Override
-	public boolean selectByUsername(User user) {
+	public boolean insertUser(User user) {
 		String cryptedPwd = new Md5Hash(user.getPassword()).toString();
 		user.setPassword(cryptedPwd);
 		int index = userMapper.insert(user);
