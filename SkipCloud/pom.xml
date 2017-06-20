@@ -91,7 +91,7 @@
         <mysql.connector.version>5.1.30</mysql.connector.version>
         <postgresql.version>9.1-901.jdbc4</postgresql.version>
         <slf4j.version>1.6.6</slf4j.version>
-        <log4j.version>1.2.12</log4j.version>
+        <jcabi.version>0.17</jcabi.version>
         <httpclient.version>4.1.2</httpclient.version>
         <jackson.version>1.9.13</jackson.version>
         <c3p0.version>0.9.1.2</c3p0.version>
@@ -108,7 +108,7 @@
         <netty.version>4.0.18.Final</netty.version>
         <hibernate.validator.version>5.1.1.Final</hibernate.validator.version>
         <redis.clients.version>2.6.2</redis.clients.version>
-        <javax.mail.version>1.5.5</javax.mail.version>
+        <javax.mail.version>1.4.7</javax.mail.version>
     </properties>
 
     <dependencies>
@@ -187,7 +187,7 @@
             <artifactId>mybatis-spring</artifactId>
             <version>${mybatis.spring.version}</version>
         </dependency>
-        
+
         <!-- mybatis 自动生成插件 -->
         <dependency>
             <groupId>org.mybatis.generator</groupId>
@@ -221,11 +221,6 @@
 
         <!-- log start -->
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>${log4j.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
@@ -235,6 +230,12 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
+        <!-- different level, different color -->
+        <dependency>
+		    <groupId>com.jcabi</groupId>
+		    <artifactId>jcabi-log</artifactId>
+		    <version>${jcabi.version}</version>
+		</dependency>
         <!-- log end -->
 
         <!-- servlet api -->
@@ -366,11 +367,11 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
-        
+
         <!-- Java Mail -->
         <dependency>
 		    <groupId>javax.mail</groupId>
-		    <artifactId>javax.mail-api</artifactId>
+		    <artifactId>mail</artifactId>
 		    <version>${javax.mail.version}</version>
 		</dependency>
 

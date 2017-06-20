@@ -110,7 +110,7 @@ public class UserController {
     public String create() {
         return "拥有user:create权限,能访问";
     }
-    
+
     /**
      * 用户注册
      */

@@ -17,6 +17,7 @@ public class CommonController {
      */
     @RequestMapping("index")
     public String index(HttpServletRequest request) {
+    	System.out.println("index");
         return "index";
     }
 
