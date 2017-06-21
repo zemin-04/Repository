@@ -91,7 +91,6 @@
         <mysql.connector.version>5.1.30</mysql.connector.version>
         <postgresql.version>9.1-901.jdbc4</postgresql.version>
         <slf4j.version>1.6.6</slf4j.version>
-        <jcabi.version>0.17</jcabi.version>
         <httpclient.version>4.1.2</httpclient.version>
         <jackson.version>1.9.13</jackson.version>
         <c3p0.version>0.9.1.2</c3p0.version>
@@ -222,20 +221,9 @@
         <!-- log start -->
         <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
-        <!-- different level, different color -->
-        <dependency>
-		    <groupId>com.jcabi</groupId>
-		    <artifactId>jcabi-log</artifactId>
-		    <version>${jcabi.version}</version>
-		</dependency>
         <!-- log end -->
 
         <!-- servlet api -->
