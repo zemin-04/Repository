@@ -22,6 +22,10 @@ import org.slf4j.LoggerFactory;
 public class SimpleMailSender {
 	
 	public static final Logger logger = LoggerFactory.getLogger(SimpleMailSender.class); 
+	//注册模板标识
+	public static final String REGISTER="_register";
+	//改密模板标识
+	public static final String CHANGES_PWD="_changesPwd";
 	
     //邮箱的配置文件
     private Properties properties ;
@@ -99,9 +103,9 @@ public class SimpleMailSender {
 	    	// 发送
 	    	Transport.send(message);
 		} catch (AddressException e) {
-			logger.error("发送方或接收方的邮箱地址错误");
+			logger.error("发送方或接收方的邮箱地址错误："+e.getMessage());
 		} catch (MessagingException e) {
-			logger.error("发送的消息异常");
+			logger.error("发送的消息异常："+e.getMessage());
 		}
     	
     }
@@ -134,9 +138,9 @@ public class SimpleMailSender {
 	    	// 发送
 	    	Transport.send(message);
     	} catch (AddressException e) {
-			logger.error("发送方或接收方的邮箱地址错误");
+			logger.error("发送方或接收方的邮箱地址错误："+e.getMessage());
 		} catch (MessagingException e) {
-			logger.error("发送的消息异常");
+			logger.error("发送的消息异常："+e.getMessage());
 		}
     }
  
@@ -145,8 +149,8 @@ public class SimpleMailSender {
      * @param recipient 收件人邮箱地址
      * @param properties 邮件配置文件
      */
-    public void send(String recipient){
-    	send(recipient, properties.getProperty("mailSubject"), properties.getProperty("mailContent"));
+    public void send(String recipient , String template){
+    	send(recipient, properties.getProperty("mailSubject"+template), properties.getProperty("mailContent"+template));
     }
  
     /**
@@ -154,8 +158,8 @@ public class SimpleMailSender {
      * @param recipients 收件人们
      * @param properties 邮件配置文件
      */
-    public void send(List<String> recipients){
-    	send(recipients, properties.getProperty("mailSubject"), properties.getProperty("mailContent"));
+    public void send(List<String> recipients , String template){
+    	send(recipients, properties.getProperty("mailSubject"+template), properties.getProperty("mailContent"+template));
     }
     
     //邮箱密码验证类
