@@ -104,7 +104,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 	</form>
 	<!-- END LOGIN FORM -->
 	<!-- BEGIN FORGOT PASSWORD FORM -->
-	<form class="forget-form" action="index.html" method="post">
+	<form class="forget-form" action="rest/user/forgetPassword" method="post">
 		<h3>忘记密码 ?</h3>
 		<p>
 			 请输入您的电子邮箱地址来重置您的密码.
@@ -112,7 +112,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 		<div class="form-group">
 			<div class="input-icon">
 				<i class="fa fa-envelope"></i>
-				<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Email" name="email"/>
+				<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Email" name="email" id="email"/>
 			</div>
 		</div>
 		<div class="form-actions">
@@ -142,7 +142,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 			<label class="control-label visible-ie8 visible-ie9">Email</label>
 			<div class="input-icon">
 				<i class="fa fa-envelope"></i>
-				<input class="form-control placeholder-no-fix" type="text" placeholder="Email" name="email" id="email"/>
+				<input class="form-control placeholder-no-fix" type="text" placeholder="Email" name="email" id="register_email"/>
 			</div>
 		</div>
 		<div class="form-group">
@@ -407,7 +407,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 			<label class="control-label visible-ie8 visible-ie9">用户名</label>
 			<div class="input-icon">
 				<i class="fa fa-user"></i>
-				<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="用户名" name="username" id="username"/>
+				<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="用户名" name="username" id="register_username"/>
 			</div>
 		</div>
 		<div class="form-group">
@@ -480,7 +480,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 		  App.init();
 		  Login.init();
 		});
-	</script>
+</script>
 <!-- END JAVASCRIPTS -->
 </body>
 <!-- END BODY -->

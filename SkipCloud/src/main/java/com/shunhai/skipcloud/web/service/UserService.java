@@ -28,4 +28,16 @@ public interface UserService extends GenericService<User, Long> {
      * @return true代表插入成功 ;false代表插入失败
      */
     boolean insertUser(User user);
+    
+    /**
+     * 检查用户是否存在
+     * @param username
+     */
+	boolean checkusername(String username);
+	
+	/**
+     * 检查邮箱是否存在
+     * @param username
+     */
+	boolean checkEmail(String email);
 }

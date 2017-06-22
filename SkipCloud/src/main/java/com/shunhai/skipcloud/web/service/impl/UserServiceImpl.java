@@ -1,5 +1,7 @@
 package com.shunhai.skipcloud.web.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.shiro.crypto.hash.Md5Hash;
@@ -65,6 +67,24 @@ public class UserServiceImpl extends GenericServiceImpl<User, Long> implements U
 		}else{
 			return false;
 		}
+	}
+
+	@Override
+	public boolean checkusername(String username) {
+		List<User> user = userMapper.checkUsername(username);
+		if(user.isEmpty())
+			return false;
+		else
+			return true;
+	}
+
+	@Override
+	public boolean checkEmail(String email) {
+		List<User> user = userMapper.checkByEmail(email);
+		if(user.isEmpty())
+			return false;
+		else
+			return true;
 	}
 
 

@@ -20,6 +20,10 @@
                 <!-- 登录页,注册页允许访问 -->
                 /rest/user/login = anon
                 /rest/user/register = anon
+                <!-- 验证用户名和邮箱允许访问 -->
+                /rest/user/checkUsername = anon
+                /rest/user/checkEmail = anon
+                /rest/user/forgetPassword = anon
                 <!-- 其他资源需要认证 -->
                 /** = authc
             </value>

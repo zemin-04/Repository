@@ -104,4 +104,16 @@
     from user
     where username = #{username,jdbcType=VARCHAR}
   </select>
+  <select id="checkUsername" resultMap="BaseResultMap" parameterType="String" >
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
+  <select id="checkByEmail" resultMap="BaseResultMap" parameterType="String" >
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where email = #{email,jdbcType=VARCHAR}
+  </select>
 </mapper>

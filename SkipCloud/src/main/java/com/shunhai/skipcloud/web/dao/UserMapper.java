@@ -1,5 +1,7 @@
 package com.shunhai.skipcloud.web.dao;
 
+import java.util.List;
+
 import com.shunhai.skipcloud.core.generic.GenericDao;
 import com.shunhai.skipcloud.web.model.User;
 
@@ -19,4 +21,8 @@ public interface UserMapper extends GenericDao<User, Long>{
 	User authentication(User user);
 
 	User selectByUsername(String username);
+	
+	List<User> checkUsername(String username);
+	
+	List<User> checkByEmail(String email);
 }

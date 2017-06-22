@@ -170,7 +170,7 @@ var Login = function() {
             // message for
             // the input
         });
-
+        
         $('.register-form').validate({
             errorElement : 'span', // default input error message container
             errorClass : 'help-block', // default input error message class
@@ -255,7 +255,7 @@ var Login = function() {
                 form.submit();
             }
         });
-
+        
         $('.register-form input').keypress(function(e) {
             if (e.which == 13) {
                 if ($('.register-form').validate().form()) {
@@ -275,7 +275,77 @@ var Login = function() {
             jQuery('.register-form').hide();
         });
     }
+    
+    //检查用户名是否注册了
+    $("#register_username").blur(function() {
+    		$(".ya").remove();
+    		$.ajax({
+    			url : "rest/user/checkUsername",
+    			type : "post",
+    			dataType : "json",
+    			async : false,
+    			data : {
+    				username : $("#register_username").val()
+    			},
+    			success : function(data) {
+    				//var jsonObj = JSON.parse(date);
+    				$.each(data, function(key, value) {
+    					if (value==1) {
+    						$("#register_username").after(function(){
+    							return "<label class='ya'>该用户名已注册，请重新输入用户名</label>";
+    						});
+    						//用户输入框获取焦点
+    						//FF的focus只能在blur之前,这里不能调用focus函数，获取焦点
+    						window.setTimeout (function(){ document.getElementById ('register_username'). select();},0 ); 
+    					}
+    				});
+    			},
+    			error : function(XMLHttpRequest, textStatus,
+    					errorThrown) {
+    				alert('XMLHttpRequest.status  '
+    						+ XMLHttpRequest.status);
+    				alert('XMLHttpRequest.readyState  '
+    						+ XMLHttpRequest.readyState);
+    				alert('textStatus  ' + textStatus);
+    			}
 
+    		});
+    	});
+    
+    //检查邮箱是否注册了
+    $("#register_email").blur(function(){
+    	$(".ya").remove();
+		$.ajax({
+			url : "rest/user/checkEmail",
+			type : "post",
+			dataType : "json",
+			async : false,
+			data : {
+				email : $("#register_email").val()
+			},
+			success : function(data) {
+				//var jsonObj = JSON.parse(date);
+				$.each(data, function(key, value) {
+					if (value==1) {
+						$("#register_email").after(function(){
+							return "<label class='ya'>该用邮箱已注册，请重新输入邮箱</label>";
+						});
+						//邮箱获取焦点
+						window.setTimeout (function(){ document.getElementById ('register_email'). select();},0 );
+					}
+				});
+			},
+			error : function(XMLHttpRequest, textStatus,
+					errorThrown) {
+				alert('XMLHttpRequest.status  '
+						+ XMLHttpRequest.status);
+				alert('XMLHttpRequest.readyState  '
+						+ XMLHttpRequest.readyState);
+				alert('textStatus  ' + textStatus);
+			}
+		});
+	});
+    
     return {
         // main function to initiate the module
         init : function() {
@@ -291,5 +361,7 @@ var Login = function() {
         }
 
     };
-
+    
 }();
+
+

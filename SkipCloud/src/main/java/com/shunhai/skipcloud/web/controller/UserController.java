@@ -1,6 +1,8 @@
 package com.shunhai.skipcloud.web.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.shunhai.skipcloud.core.util.SimpleMailSender;
 import com.shunhai.skipcloud.web.model.User;
 import com.shunhai.skipcloud.web.security.PermissionSign;
 import com.shunhai.skipcloud.web.security.RoleSign;
@@ -123,5 +126,46 @@ public class UserController {
     		return "login";
     	else
     		return "error";
+    }
+    /**
+     * 验证账号唯一
+     */
+    @RequestMapping(value = "/checkUsername", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Integer> checkUsername(String username){
+    	List<Integer> ma = new ArrayList<Integer>();
+    	boolean isTrue = userService.checkusername(username);
+    	if(isTrue)
+    		ma.add(1);
+    	else
+    		ma.add(2);
+    	
+    	return ma;
+    }
+    /**
+     * 验证邮箱唯一
+     */
+    @RequestMapping(value = "/checkEmail", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Integer> checkEmail(String email){
+    	//String a[] =username.split("=");
+    	List<Integer> emai = new ArrayList<Integer>();
+    	boolean isTrue = userService.checkEmail(email);
+    	if(isTrue)
+    		emai.add(1);
+    	else
+    		emai.add(2);
+    	
+    	return emai;
+    }
+    /**
+     * 根据邮箱修改密码
+     */
+    @RequestMapping(value = "/forgetPassword", method = RequestMethod.POST)
+    public String forgetPassword(@Valid User user, BindingResult result, Model model, HttpServletRequest reques){
+    	System.out.println("邮箱传过来了："+user.getEmail());
+    	SimpleMailSender sms = new SimpleMailSender();
+    	sms.send(user.getEmail(),sms.CHANGES_PWD);
+    	return "login";
     }
 }
