@@ -150,16 +150,17 @@ public class SimpleMailSender {
      * @param properties 邮件配置文件
      */
     public void send(String recipient , String template){
-    	send(recipient, properties.getProperty("mailSubject"+template), properties.getProperty("mailContent"+template));
+    	properties.setProperty("toEmailAddress", recipient);
+    	send(recipient, PropertiesTool.get(properties, "mailSubject"+template) , PropertiesTool.get(properties, "mailContent"+template));
     }
  
     /**
      * 群发邮件
-     * @param recipients 收件人们
+     * @param recipients 收件人们的邮箱地址
      * @param properties 邮件配置文件
      */
     public void send(List<String> recipients , String template){
-    	send(recipients, properties.getProperty("mailSubject"+template), properties.getProperty("mailContent"+template));
+    	send(recipients, PropertiesTool.get(properties, "mailSubject"+template) , PropertiesTool.get(properties, "mailContent"+template));
     }
     
     //邮箱密码验证类

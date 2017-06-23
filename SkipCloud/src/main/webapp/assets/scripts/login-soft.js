@@ -183,7 +183,19 @@ var Login = function() {
                 },
                 email : {
                     required : true,
-                    email : true
+                    onChange : true,
+                    remote: {
+                        url: "rest/user/checkEmail?date="+new Date(),     //后台处理程序
+                        dataType: "json",           //接受数据格式   
+                        success: function(data) {
+                        	alert(data.data);
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        	 alert(XMLHttpRequest.status);
+                        	 alert(XMLHttpRequest.readyState);
+                        	 alert(textStatus);
+                        }
+                    }
                 },
                 address : {
                     required : true
@@ -211,6 +223,10 @@ var Login = function() {
             },
 
             messages : { // custom messages for radio buttons and checkboxes
+            	email : {
+                    required : "请输入邮箱",
+                    remote: "邮箱已经注册"
+                },
                 tnc : {
                     required : "Please accept TNC first."
                 }

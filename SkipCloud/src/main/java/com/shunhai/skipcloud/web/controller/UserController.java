@@ -41,7 +41,6 @@ public class UserController {
 
     /**
      * 用户登录
-     *
      * @param user
      * @param result
      * @return
@@ -81,7 +80,6 @@ public class UserController {
 
     /**
      * 用户登出
-     *
      * @param session
      * @return
      */
@@ -127,6 +125,7 @@ public class UserController {
     	else
     		return "error";
     }
+
     /**
      * 验证账号唯一
      */
@@ -142,6 +141,7 @@ public class UserController {
     	
     	return ma;
     }
+
     /**
      * 验证邮箱唯一
      */
@@ -158,6 +158,7 @@ public class UserController {
     	
     	return emai;
     }
+    
     /**
      * 根据邮箱修改密码
      */
@@ -165,7 +166,8 @@ public class UserController {
     public String forgetPassword(@Valid User user, BindingResult result, Model model, HttpServletRequest reques){
     	System.out.println("邮箱传过来了："+user.getEmail());
     	SimpleMailSender sms = new SimpleMailSender();
-    	sms.send(user.getEmail(),sms.CHANGES_PWD);
+    	sms.send(user.getEmail(),SimpleMailSender.CHANGES_PWD);
     	return "login";
+
     }
 }

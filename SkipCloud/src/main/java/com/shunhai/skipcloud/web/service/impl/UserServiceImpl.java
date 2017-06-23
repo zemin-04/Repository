@@ -86,7 +86,4 @@ public class UserServiceImpl extends GenericServiceImpl<User, Long> implements U
 		else
 			return true;
 	}
-
-
-
 }
