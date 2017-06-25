@@ -59,7 +59,7 @@ public class UserServiceImpl extends GenericServiceImpl<User, Long> implements U
 
 	@Override
 	public boolean insertUser(User user) {
-		String cryptedPwd = new Md5Hash(user.getPassword()).toString();
+		String cryptedPwd = new Md5Hash(user.getPassword(),user.getUsername(),1024).toString();
 		user.setPassword(cryptedPwd);
 		int index = userMapper.insert(user);
 		if(index>0){
@@ -89,8 +89,10 @@ public class UserServiceImpl extends GenericServiceImpl<User, Long> implements U
 
 	@Override
 	public void changePassword(User user) {
+		String cryptedPwd = new Md5Hash(user.getPassword(),user.getUsername(),1024).toString();
+		user.setPassword(cryptedPwd);
 		userMapper.changPassword(user);
-		
+
 	}
 
 	@Override

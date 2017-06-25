@@ -37,6 +37,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 <link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2_metro.css"/>
 <!-- END PAGE LEVEL SCRIPTS -->
 <!-- BEGIN THEME STYLES -->
+<link href="assets/css/style-vcode.css" rel="stylesheet" type="text/css"/>
 <link href="assets/css/style-metronic.css" rel="stylesheet" type="text/css"/>
 <link href="assets/css/style.css" rel="stylesheet" type="text/css"/>
 <link href="assets/css/style-responsive.css" rel="stylesheet" type="text/css"/>
@@ -45,7 +46,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 <link href="assets/css/pages/login-soft.css" rel="stylesheet" type="text/css"/>
 <link href="assets/css/custom.css" rel="stylesheet" type="text/css"/>
 <!-- END THEME STYLES -->
-<link rel="shortcut icon" href="assets/app/img/favicon.ico"/>
+<link rel="shortcut icon" href="app/img/favicon.ico"/>
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -81,9 +82,18 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 				<input name="password" id="password" size="25" value="123456" class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="密码" />
 			</div>
 		</div>
+		<div class="form-group">
+			<label class="control-label visible-ie8 visible-ie9">验证码</label>
+			<div class="input-icon">
+				<i class="fa fa-asterisk"></i>
+				<input name="vcode" id="vcode" size="25" value="" class="form-control-half placeholder-no-fix" type="text" autocomplete="off" placeholder="验证码" />
+				<img alt="验证码" id="vcodeImg" src="rest/getGifCode" align="right">
+				<div style="clear:both"></div>
+			</div>
+		</div>
 		<div class="form-actions">
 			<label class="checkbox">
-			<input type="checkbox" name="remember" value="1"/> 记住我 </label>
+			<input type="checkbox" name="rememberMeParam" value="true"/> 记住我 </label>
 			<button id="loginBut" type="submit" class="btn blue pull-right">
 			登录 <i class="m-icon-swapright m-icon-white"></i>
 			</button>
@@ -446,7 +456,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 <!-- END LOGIN -->
 <!-- BEGIN COPYRIGHT -->
 <div class="copyright">
-	 2014 &copy; Eliteams - Quick4j
+	 2017 &copy; Eliteams - SkipCloud
 </div>
 <!-- END COPYRIGHT -->
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
@@ -472,13 +482,16 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="assets/scripts/app.js" type="text/javascript"></script>
 <script src="assets/scripts/login-soft.js" type="text/javascript"></script>
-
 <script src="app/lib/security/sha256.js" type="text/javascript"></script>
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>
 		jQuery(document).ready(function() {
 		  App.init();
 		  Login.init();
+
+		  $("#vcodeImg").click(function(){
+			  this.src = "rest/getGifCode?nocache="+new Date().getTime();
+			});
 		});
 </script>
 <!-- END JAVASCRIPTS -->

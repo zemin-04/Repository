@@ -12,17 +12,17 @@ public class User {
     private String state;
 
     private Date createTime;
-    
+
     private String fullname;
-    
+
     private String email;
-    
+
     private String address;
-    
+
     private String city;
-    
+
     private String country;
-    
+
 
     public User() {
 	}
@@ -37,7 +37,11 @@ public class User {
 		this.city = city;
 		this.country = country;
 	}
-	
+
+	public User(String username) {
+		this.username = username;
+	}
+
 	public User(String username, String password) {
 		this.username = username;
 		this.password = password;

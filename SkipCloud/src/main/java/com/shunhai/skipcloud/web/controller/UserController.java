@@ -11,10 +11,13 @@ import javax.validation.Valid;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.DisabledAccountException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
-import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +25,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.WebUtils;
 
 import com.shunhai.skipcloud.core.util.SimpleMailSender;
 import com.shunhai.skipcloud.web.model.User;
@@ -47,35 +51,45 @@ public class UserController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(@Valid User user, BindingResult result, Model model, HttpServletRequest request) {
+    	//验证码校验
+    	String vcode = request.getParameter("vcode");
+    	if(!vcode.toLowerCase().equals(WebUtils.getSessionAttribute(request, "vcode"))){
+    		model.addAttribute("error", "验证码错误 ！");
+    		return "login";
+    	}
+    	String error = null;
         try {
-            Subject subject = SecurityUtils.getSubject();
-            System.out.println("已经进入userController");
+        	Subject subject = SecurityUtils.getSubject();
             // 已登陆则 跳到首页
             if (subject.isAuthenticated()) {
-            	System.out.println("已经登陆");
                 return "redirect:/";
             }
             if (result.hasErrors()) {
-                model.addAttribute("error", "参数错误！");
-                System.out.println("参数有误");
+                model.addAttribute("error", "用户参数错误！");
                 return "login";
             }
-            System.out.println(user.getUsername()+"正在进行身份认证,密码为："+user.getPassword());
-            String passwordNew = new Md5Hash(user.getPassword()).toString();
-            System.out.println("后端加密为："+passwordNew);
             // 身份验证
-            subject.login(new UsernamePasswordToken(user.getUsername(), passwordNew));
+            subject.login(new UsernamePasswordToken(user.getUsername(), user.getPassword()));
             // 验证成功在Session中保存用户信息
             final User authUserInfo = userService.selectByUsername(user.getUsername());
-            request.getSession().setAttribute("userInfo", authUserInfo);
-            System.out.println(user.getUsername()+"登陆成功,密码为："+authUserInfo.getPassword());
+            WebUtils.setSessionAttribute(request, "userInfo", authUserInfo);
+        } catch ( LockedAccountException e ) {
+    	    error = "登录失败3次，账户已被锁定 ，请3分钟后再试！";
+        } catch ( DisabledAccountException e ) {
+    	    error = "该账户已被禁用 ，请联系管理员！";
+        } catch (UnknownAccountException e) {
+        	error = "该账户不存在 ！";
+        } catch (IncorrectCredentialsException e) {
+        	error = "用户名或密码错误 ！";
         } catch (AuthenticationException e) {
-            // 身份验证失败
-            model.addAttribute("error", "用户名或密码错误 ！");
-            System.out.println("用户名或密码错误");
-            return "login";
+            error = "其他错误："+e.getMessage()+"！";
         }
-        return "redirect:/";
+        if(null != error){
+        	model.addAttribute("error", error);
+        	return "login";
+        }else{
+        	return "redirect:/";
+        }
     }
 
     /**
@@ -117,7 +131,6 @@ public class UserController {
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String register(@Valid User user, BindingResult result, Model model, HttpServletRequest request) {
-    	System.out.println("注册时SHA256加密后密码为："+user.getPassword()+" 姓名是："+user.getFullname());
     	user.setState("正常");
     	user.setCreateTime(new Date());
     	if(userService.insertUser(user))
@@ -138,7 +151,7 @@ public class UserController {
     		ma.add(1);
     	else
     		ma.add(2);
-    	
+
     	return ma;
     }
 
@@ -155,10 +168,10 @@ public class UserController {
     		emai.add(1);
     	else
     		emai.add(2);
-    	
+
     	return emai;
     }
-    
+
     /**
      * 根据邮箱修改密码
      */
@@ -183,15 +196,12 @@ public class UserController {
     	user.setId(id);;*/
     	return "changePassword";
     }
-    
+
     /**
      * 修改密码
      */
     @RequestMapping(value = "/changPassword", method = RequestMethod.POST)
     public String changPassword(@Valid User user, BindingResult result, Model model, HttpServletRequest reques){
-    	System.out.println("密码是多少： " +user.getPassword());
-    	user.setPassword(new Md5Hash(user.getPassword()).toString());
-    	System.out.println("新密码是："+user.getPassword());
     	userService.changePassword(user);
     	return "login";
     }

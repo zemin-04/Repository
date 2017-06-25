@@ -20,25 +20,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SimpleMailSender {
-	
-	public static final Logger logger = LoggerFactory.getLogger(SimpleMailSender.class); 
+
+	public static final Logger logger = LoggerFactory.getLogger(SimpleMailSender.class);
 	//注册模板标识
 	public static final String REGISTER="_register";
 	//改密模板标识
 	public static final String CHANGES_PWD="_changesPwd";
-	
+
     //邮箱的配置文件
-    public Properties properties ;
-    
+    private Properties properties ;
+
     //邮件服务器登录验证
     private MailAuthenticator authenticator;
- 
+
     //邮箱session
     private Session session;
-    
+
     //邮箱的配置文件路径
     private String mailConfigPath="/mail.properties";
- 
+
     /**
      * 初始化邮件发送器
      * 获取发送邮件的props文件，以及加载邮箱的配置文件
@@ -55,7 +55,7 @@ public class SimpleMailSender {
 		}
     	init(props);
     }
- 
+
     /**
      * 初始化
      * @param props 发送邮件的props文件
@@ -73,13 +73,13 @@ public class SimpleMailSender {
     	//props.put("mail.smtp.ssl.enable", "true");
     	// props.put("mail.smtp.port", "465"); //google使用465或587端口
     	// props.put("mail.debug", "true");
-    	
+
     	// 验证邮箱地址和密码
 		this.authenticator = new MailAuthenticator(this.properties.getProperty("username"), properties.getProperty("password"));
     	// 创建session
     	this.session = Session.getInstance(props, this.authenticator);
     }
- 
+
     /**
      * 发送邮件
      * @param recipient 收件人邮箱地址
@@ -109,9 +109,9 @@ public class SimpleMailSender {
 		} catch (MessagingException e) {
 			logger.error("发送的消息异常："+e.getMessage());
 		}
-    	
+
     }
- 
+
     /**
      * 群发邮件
      * @param recipients 收件人们
@@ -145,7 +145,7 @@ public class SimpleMailSender {
 			logger.error("发送的消息异常："+e.getMessage());
 		}
     }
- 
+
     /**
      * 发送邮件
      * @param recipient 收件人邮箱地址
@@ -155,7 +155,7 @@ public class SimpleMailSender {
     	properties.setProperty("toEmailAddress", recipient);
     	send(recipient, PropertiesTool.get(properties, "mailSubject"+template) , PropertiesTool.get(properties, "mailContent"+template));
     }
- 
+
     /**
      * 群发邮件
      * @param recipients 收件人们的邮箱地址
@@ -164,18 +164,18 @@ public class SimpleMailSender {
     public void send(List<String> recipients , String template){
     	send(recipients, PropertiesTool.get(properties, "mailSubject"+template) , PropertiesTool.get(properties, "mailContent"+template));
     }
-    
+
     //邮箱密码验证类
     class MailAuthenticator extends Authenticator {
-    	
+
     	//用户名（登录邮箱）
         private String username;
-        
+
         //密码
         private String password;
-        
+
         public MailAuthenticator() {
-        	
+
         }
         /**
          * 初始化邮箱和密码
@@ -186,24 +186,24 @@ public class SimpleMailSender {
         	this.username = username;
         	this.password = password;
         }
-        
+
         @Override
         protected PasswordAuthentication getPasswordAuthentication() {
         	return new PasswordAuthentication(this.username, this.password);
         }
-        
+
         public String getPassword() {
         	return this.password;
         }
-        
+
         public String getUsername() {
         	return this.username;
         }
-     
+
         public void setPassword(String password) {
         	this.password = password;
         }
-     
+
         public void setUsername(String username) {
         	this.username = username;
         }

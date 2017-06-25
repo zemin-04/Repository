@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ehcache updateCheck="false" name="txswx-ehcache">
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+   updateCheck="false" name="txswx-ehcache">
     <diskStore path="java.io.tmpdir"/>
     <!-- DefaultCache setting. -->
     <defaultCache maxEntriesLocalHeap="10000"

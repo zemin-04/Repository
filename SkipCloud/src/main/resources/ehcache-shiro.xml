@@ -1,12 +1,34 @@
-<ehcache updateCheck="false" name="shiroCache">
-
-    <defaultCache
-            maxElementsInMemory="10000"
-            eternal="false"
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+   updateCheck="false" name="shiroCache"
+   maxBytesLocalHeap="500M">
+	<!-- 配置磁盘缓存使用的物理路径，磁盘缓存使用的文件后缀名是.data和.index -->
+	<diskStore path="java.io.tmpdir"/>
+	<defaultCache
+            eternal="true"
             timeToIdleSeconds="120"
             timeToLiveSeconds="120"
             overflowToDisk="false"
             diskPersistent="false"
             diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU"
             />
+			<!-- 内存中最大缓存对象数  -->
+			<!-- maxElementsInMemory="10000" -->
+			<!-- 是否永久有效，一但设置了，timeout将不起作用  -->
+			<!-- 缓存创建以后，最后一次访问缓存的日期至失效之时的时间间隔 -->
+			<!-- 缓存自创建日期起至失效时的间隔时间 -->
+			<!-- overflowToDisk=true意思是表示当缓存中元素的数量超过在内存的限制时，就把这些元素持久化到硬盘 -->
+			<!--   是否缓存虚拟机重启期数据 -->
+			<!--  磁盘失效线程运行时间间隔，默认是120秒 -->
+			<!--  设置DiskStore（磁盘缓存）的缓存区大小 -->
+            <!-- diskSpoolBufferSizeMB=30MB -->
+            <!-- Ehcache将会根据指定的策略去清理内存。默认策略是LRU（最近最少使用） -->
+
+    <!-- 登录记录缓存 锁定10分钟 -->
+    <cache name="userRetryCache" eternal="false"
+        timeToIdleSeconds="360" timeToLiveSeconds="0" overflowToDisk="false"
+        statistics="true">
+    </cache>
+
 </ehcache>

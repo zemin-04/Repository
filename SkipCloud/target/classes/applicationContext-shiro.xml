@@ -17,25 +17,21 @@
                 <!-- 静态资源允许访问 -->
                 /app/** = anon
                 /assets/** = anon
+                <!-- 验证码请求允许访问 -->
+                /rest/getGifCode = anon
                 <!-- 登录页,注册页允许访问 -->
                 /rest/user/login = anon
                 /rest/user/register = anon
                 <!-- 验证用户名和邮箱允许访问 -->
                 /rest/user/checkUsername = anon
                 /rest/user/checkEmail = anon
+                <!-- 修改密码的路径 -->
                 /rest/user/forgetPassword = anon
+                /rest/user/changPassword =anon
+                /rest/user/cp = anon
                 <!-- 其他资源需要认证 -->
                 /** = authc
             </value>
-        </property>
-    </bean>
-
-	<!-- 登录密码比对，使用加密方式MD5 -->
-	<bean id="SecurityRealm" class="com.shunhai.skipcloud.web.security.SecurityRealm">
-        <property name="credentialsMatcher">
-            <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
-                <property name="hashAlgorithmName" value="MD5"/>
-            </bean>
         </property>
     </bean>
 
@@ -48,8 +44,8 @@
     <bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.MemorySessionDAO"/>
 
     <!-- 会话管理器 -->
-    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
-        <property name="sessionDAO" ref="sessionDAO"/>
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.ServletContainerSessionManager">
+        <!-- <property name="sessionDAO" ref="sessionDAO"/> -->
     </bean>
 
     <!-- 安全管理器 -->
@@ -60,8 +56,8 @@
             </list>
         </property>
         <!-- cacheManager,集合spring缓存工厂 -->
-        <!-- <property name="cacheManager" ref="shiroEhcacheManager" /> -->
-        <!-- <property name="sessionManager" ref="sessionManager" /> -->
+        <property name="cacheManager" ref="shiroEhcacheManager" />
+        <property name="sessionManager" ref="sessionManager" />
     </bean>
 
     <!-- Shiro生命周期处理器 -->
