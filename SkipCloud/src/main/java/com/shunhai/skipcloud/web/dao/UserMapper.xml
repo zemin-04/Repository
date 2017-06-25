@@ -116,4 +116,19 @@
     from user
     where email = #{email,jdbcType=VARCHAR}
   </select>
+  <update id="changPassword"  parameterType="com.shunhai.skipcloud.web.model.User">
+ UPDATE user
+ set
+ password = #{password,jdbcType=CHAR}
+ <!--  
+  <if test="username!=null">username=#{username,jdbcType=VARCHAR},</if>
+  
+  <if test="state!=null">state=#{state,jdbcType=VARCHAR},</if>
+  <if test="createTime!=null">createTime=#{createTime,jdbcType=TIMESTAMP},</if>
+  <if test="fullname!=null">fullname=#{fullname,jdbcType=VARCHAR},</if>
+  <if test="address!=null">STATUS=#{status,jdbcType=VARCHAR},</if>
+  <if test="city!=null">city=#{city,jdbcType=VARCHAR},</if>
+  <if test="country!=null">country=#{country,jdbcType=VARCHAR},</if> -->
+ WHERE email=#{email,jdbcType=VARCHAR}
+</update>
 </mapper>

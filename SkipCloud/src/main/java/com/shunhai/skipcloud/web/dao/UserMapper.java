@@ -25,4 +25,7 @@ public interface UserMapper extends GenericDao<User, Long>{
 	List<User> checkUsername(String username);
 	
 	List<User> checkByEmail(String email);
+
+	void changPassword(User user);
+
 }

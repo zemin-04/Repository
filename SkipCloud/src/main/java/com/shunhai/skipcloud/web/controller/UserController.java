@@ -165,9 +165,34 @@ public class UserController {
     @RequestMapping(value = "/forgetPassword", method = RequestMethod.POST)
     public String forgetPassword(@Valid User user, BindingResult result, Model model, HttpServletRequest reques){
     	System.out.println("邮箱传过来了："+user.getEmail());
+    	//这里返回的id可能有bug
+    	//Long id  = userService.selectByEmail(user.getEmail());
     	SimpleMailSender sms = new SimpleMailSender();
     	sms.send(user.getEmail(),SimpleMailSender.CHANGES_PWD);
+    	//sms.properties.setProperty("toEmailAddress", user.getEmail());
+    	//sms.send(user.getEmail(),SimpleMailSender.CHANGES_PWD);
     	return "login";
-
+    }
+    /**
+     * 跳到changPassword页面
+     */
+    @RequestMapping(value = "/cp", method = RequestMethod.GET)
+    public String cp(@Valid User user, BindingResult result, Model model, HttpServletRequest request){
+    	/*Long id = Long.parseLong(request.getParameter("id"));
+    	System.out.println("配置获取的id传过来了："+id);
+    	user.setId(id);;*/
+    	return "changePassword";
+    }
+    
+    /**
+     * 修改密码
+     */
+    @RequestMapping(value = "/changPassword", method = RequestMethod.POST)
+    public String changPassword(@Valid User user, BindingResult result, Model model, HttpServletRequest reques){
+    	System.out.println("密码是多少： " +user.getPassword());
+    	user.setPassword(new Md5Hash(user.getPassword()).toString());
+    	System.out.println("新密码是："+user.getPassword());
+    	userService.changePassword(user);
+    	return "login";
     }
 }

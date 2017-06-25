@@ -40,4 +40,12 @@ public interface UserService extends GenericService<User, Long> {
      * @param username
      */
 	boolean checkEmail(String email);
+	
+	/**
+	 * 根据邮箱来修改密码
+	 * @param user
+	 */
+	void changePassword(User user);
+
+	Long selectByEmail(String email);
 }

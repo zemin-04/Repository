@@ -361,6 +361,39 @@ var Login = function() {
 			}
 		});
 	});
+    //检查邮箱是否存在
+    $("#email").blur(function(){
+    	$(".ya").remove();
+		$.ajax({
+			url : "rest/user/checkEmail",
+			type : "post",
+			dataType : "json",
+			async : false,
+			data : {
+				email : $("#email").val()
+			},
+			success : function(data) {
+				//var jsonObj = JSON.parse(date);
+				$.each(data, function(key, value) {
+					if (value==2) {
+						$("#email").after(function(){
+							return "<label class='ya'>邮箱不存在，请重新输入</label>";
+						});
+						//邮箱获取焦点
+						window.setTimeout (function(){ document.getElementById ('email'). select();},0 );
+					}
+				});
+			},
+			error : function(XMLHttpRequest, textStatus,
+					errorThrown) {
+				alert('XMLHttpRequest.status  '
+						+ XMLHttpRequest.status);
+				alert('XMLHttpRequest.readyState  '
+						+ XMLHttpRequest.readyState);
+				alert('textStatus  ' + textStatus);
+			}
+		});
+	});
     
     return {
         // main function to initiate the module

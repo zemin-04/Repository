@@ -23,7 +23,10 @@
                 <!-- 验证用户名和邮箱允许访问 -->
                 /rest/user/checkUsername = anon
                 /rest/user/checkEmail = anon
+                <!-- 修改密码的路径 -->
                 /rest/user/forgetPassword = anon
+                /rest/user/changPassword =anon
+                /rest/user/cp = anon
                 <!-- 其他资源需要认证 -->
                 /** = authc
             </value>

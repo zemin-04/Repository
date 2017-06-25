@@ -28,7 +28,7 @@ public class SimpleMailSender {
 	public static final String CHANGES_PWD="_changesPwd";
 	
     //邮箱的配置文件
-    private Properties properties ;
+    public Properties properties ;
     
     //邮件服务器登录验证
     private MailAuthenticator authenticator;
@@ -46,7 +46,7 @@ public class SimpleMailSender {
     public SimpleMailSender() {
     	//发送邮件的props文件
         Properties props = System.getProperties();
-    	InputStream inputStream = getClass().getResourceAsStream(this.mailConfigPath);
+    	InputStream inputStream = PropertiesTool.class.getResourceAsStream(this.mailConfigPath);
     	this.properties = new Properties();
     	try {
 			properties.load(inputStream);
@@ -97,6 +97,8 @@ public class SimpleMailSender {
 	    	// 设置主题
 	    	message.setSubject(subject);
 	    	// 设置邮件内容
+	    	//String str = content.toString();
+	    	//String newStr[] = str.split("\"");
 	    	message.setContent(content.toString(), "text/html;charset=utf-8");
 	    	// 设置发送时间
 	    	message.setSentDate(new Date());

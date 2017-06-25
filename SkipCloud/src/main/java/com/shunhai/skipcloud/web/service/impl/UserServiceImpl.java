@@ -86,4 +86,22 @@ public class UserServiceImpl extends GenericServiceImpl<User, Long> implements U
 		else
 			return true;
 	}
+
+	@Override
+	public void changePassword(User user) {
+		userMapper.changPassword(user);
+		
+	}
+
+	@Override
+	public Long selectByEmail(String email) {
+		List<User> list = userMapper.checkByEmail(email);
+		Long a = (long)0;
+		if(list.size()==1){
+			for (User user : list) {
+				a = user.getId();
+			}
+		}
+		return a;
+	}
 }
