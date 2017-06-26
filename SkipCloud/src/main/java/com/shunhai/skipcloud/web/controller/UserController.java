@@ -18,6 +18,9 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.cache.Cache;
+import org.apache.shiro.cache.CacheManager;
+import org.apache.shiro.codec.Base64;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,6 +45,10 @@ public class UserController {
 
     @Resource
     private UserService userService;
+    
+    @Resource(name="shiroEhcacheManager")
+    private CacheManager cacheManager;
+    private Cache<String,String> changePasswordCache;
 
     /**
      * 用户登录
@@ -68,6 +75,7 @@ public class UserController {
                 model.addAttribute("error", "用户参数错误！");
                 return "login";
             }
+            System.out.println("login"+user.getPassword());
             // 身份验证
             subject.login(new UsernamePasswordToken(user.getUsername(), user.getPassword()));
             // 验证成功在Session中保存用户信息
@@ -131,6 +139,7 @@ public class UserController {
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String register(@Valid User user, BindingResult result, Model model, HttpServletRequest request) {
+    	System.out.println("register:"+user.getPassword());
     	user.setState("正常");
     	user.setCreateTime(new Date());
     	if(userService.insertUser(user))
@@ -182,6 +191,8 @@ public class UserController {
     	//Long id  = userService.selectByEmail(user.getEmail());
     	SimpleMailSender sms = new SimpleMailSender();
     	sms.send(user.getEmail(),SimpleMailSender.CHANGES_PWD);
+    	changePasswordCache = cacheManager.getCache("changePasswordCache");
+    	changePasswordCache.put(user.getEmail(), "email");
     	//sms.properties.setProperty("toEmailAddress", user.getEmail());
     	//sms.send(user.getEmail(),SimpleMailSender.CHANGES_PWD);
     	return "login";
@@ -191,9 +202,13 @@ public class UserController {
      */
     @RequestMapping(value = "/cp", method = RequestMethod.GET)
     public String cp(@Valid User user, BindingResult result, Model model, HttpServletRequest request){
-    	/*Long id = Long.parseLong(request.getParameter("id"));
-    	System.out.println("配置获取的id传过来了："+id);
+    	String email = request.getParameter("zemin");
+    	/*System.out.println("配置获取的id传过来了："+id);
     	user.setId(id);;*/
+    	if(null==email||email.trim().equals("")){
+    		model.addAttribute("error","此链接参数已被破坏，请重新输入");
+    	}
+    	user.setEmail(Base64.decodeToString(email));
     	return "changePassword";
     }
 
@@ -202,7 +217,13 @@ public class UserController {
      */
     @RequestMapping(value = "/changPassword", method = RequestMethod.POST)
     public String changPassword(@Valid User user, BindingResult result, Model model, HttpServletRequest reques){
-    	userService.changePassword(user);
-    	return "login";
+    	String email = changePasswordCache.get(user.getEmail());
+    	if(null != email && email.equals("email")){
+    		userService.changePassword(user);
+    		return "login";
+    	}else{
+    		model.addAttribute("error", "此链接已失效，请重新申请改密！");
+    		return "changePassword";
+    	}
     }
 }

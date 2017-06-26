@@ -16,6 +16,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
 
+import org.apache.shiro.codec.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -152,7 +153,7 @@ public class SimpleMailSender {
      * @param properties 邮件配置文件
      */
     public void send(String recipient , String template){
-    	properties.setProperty("toEmailAddress", recipient);
+    	properties.setProperty("toEmailAddress",Base64.encodeToString(recipient.getBytes()) );
     	send(recipient, PropertiesTool.get(properties, "mailSubject"+template) , PropertiesTool.get(properties, "mailContent"+template));
     }
 

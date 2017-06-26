@@ -89,6 +89,9 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 				<input name="repassword" id="repassword" size="25" value="" class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="再次输入新密码" />
 			</div>
 		</div>
+		<div class="display_error">
+			<span><font color="red" size="5">${error}</font></span>
+		</div>
 		<div class="form-actions">
 			<button id="loginBut" type="button" class="btn blue pull-right">
 			提交 <i class="m-icon-swapright m-icon-white"></i>
@@ -182,6 +185,9 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 					$("#password").val(sha256_digest($("#password").val()));
 					$("#changfrom").submit();
 				}
+  			});
+  			$("div:contains('John')").children(function(){
+  				if()
   			});
 		});
 </script>

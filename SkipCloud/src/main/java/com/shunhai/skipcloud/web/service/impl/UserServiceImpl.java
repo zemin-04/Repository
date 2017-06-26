@@ -60,6 +60,7 @@ public class UserServiceImpl extends GenericServiceImpl<User, Long> implements U
 	@Override
 	public boolean insertUser(User user) {
 		String cryptedPwd = new Md5Hash(user.getPassword(),user.getUsername(),1024).toString();
+		System.out.println("register cryptedPwd:"+cryptedPwd);
 		user.setPassword(cryptedPwd);
 		int index = userMapper.insert(user);
 		if(index>0){

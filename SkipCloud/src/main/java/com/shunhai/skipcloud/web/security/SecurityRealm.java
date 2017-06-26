@@ -93,7 +93,7 @@ public class SecurityRealm extends AuthorizingRealm {
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), ByteSource.Util.bytes(username), getName());
         return authenticationInfo;
     }
-
+    
     @Override
     protected void assertCredentialsMatch(AuthenticationToken token,
     		AuthenticationInfo info) throws AuthenticationException {
@@ -111,4 +111,6 @@ public class SecurityRealm extends AuthorizingRealm {
     	super.assertCredentialsMatch(token, info);
     	userRetryCache.remove(username);
     }
+    
+    
 }
