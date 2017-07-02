@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shunhai.skipcloud.web.dao.IpLocationMapper" >
+  <resultMap id="BaseResultMap" type="com.shunhai.skipcloud.web.model.IpLocation" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="StartIP_S" property="startIP_S" jdbcType="VARCHAR" />
+    <result column="EndIP_S" property="endIP_S" jdbcType="VARCHAR" />
+    <result column="Address" property="address" jdbcType="VARCHAR" />
+    <result column="Company" property="company" jdbcType="VARCHAR" />
+    <result column="StartIP_L" property="startIP_L" jdbcType="BIGINT" />
+    <result column="EndIP_L" property="endIP_L" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, Address, Company
+  </sql>
+  <select id="selectByIp" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from iplocation
+    where inet_aton(#{ip,jdbcType=VARCHAR}) between StartIP_L and EndIP_L
+  </select>
+</mapper>

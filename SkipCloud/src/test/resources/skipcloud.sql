@@ -87,3 +87,22 @@ insert  into user_role(id,user_id,role_id) values (1,1,1);
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+
+/*Table structure for table 'iplocation' */
+
+DROP TABLE IF EXISTS iplocation;
+
+CREATE TABLE `iplocation` (
+  `id` int(6) NOT NULL AUTO_INCREMENT,
+  `StartIP_S` varchar(15) NOT NULL,
+  `EndIP_S` varchar(15) NOT NULL,
+  `Address` varchar(50) NOT NULL,
+  `Company` varchar(50) NOT NULL,
+  `StartIP_L` bigint(10) NOT NULL,
+  `EndIP_L` bigint(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*load IP data*/
+load  data  infile  'F:\\IP.txt'  into table iplocation  fields  terminated  by ","  OPTIONALLY ENCLOSED BY "'" (StartIP_S,EndIP_S,Address,Company,StartIP_L,EndIP_L);

@@ -1,4 +1,7 @@
 package com.shunhai.skipcloud.core.generic;
+
+import java.util.List;
+
 /**
  * 所有自定义Dao的顶级接口, 封装常用的增删查改操作,
  * 可以通过Mybatis Generator Maven 插件自动生成Dao,
@@ -37,5 +40,11 @@ public interface GenericDao<Model, PK> {
      * @return
      */
     Model selectByPrimaryKey(PK id);
+
+    /**
+     * 查询所有对象
+     * @return
+     */
+	List<Model> selectList();
 
 }

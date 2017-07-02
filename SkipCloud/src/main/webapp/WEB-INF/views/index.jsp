@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
@@ -109,31 +109,35 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
                         <li class="start active">
                             <a href="rest/page/dashboard" id="btn-dashboard">
-                                <i class="fa fa-home"></i><span class="title"> 首页 </span><span
+                                <i class="fa fa-home"></i><span class="title">首页 </span><span
                                 class="selected"> </span>
                             </a>
                         </li>
 
                         <li class="">
                             <a href="javascript:;">
-                                <i class="fa fa-gears"></i><span class="title"> 系统管理 </span><span
+                                <i class="fa fa-gears"></i><span class="title">系统管理 </span><span
                                 class="arrow "> </span>
                             </a>
                             <ul class="sub-menu">
                                 <li>
                                     <a href="javascript:;">
-                                        用户管理
-                                    </a>
+                                    	<span class="title">用户管理 </span><span class="arrow "></span>
+                                	</a>
+                                    <ul class="sub-menu">
+		                                <li>
+		                                    <a href="rest/user/userList">  用户列表</a>
+		                                </li>
+		                                <li>
+		                                    <a href="javascript:;">在线用户</a>
+		                                </li>
+		                            </ul>
                                 </li>
                                 <li>
-                                    <a href="javascript:;">
-                                        角色管理
-                                    </a>
+                                    <a href="javascript:;"> 角色管理</a>
                                 </li>
                                 <li>
-                                    <a href="rest/permission/permissionList">
-                                        权限管理
-                                    </a>
+                                    <a href="rest/permission/permissionList">权限管理</a>
                                 </li>
                             </ul>
                         </li>
@@ -145,14 +149,10 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                             </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="javascript:;">
-                                        信息修改
-                                    </a>
+                                    <a href="javascript:;"> 信息修改</a>
                                 </li>
                                 <li>
-                                    <a href="javascript:;">
-                                        密码修改
-                                    </a>
+                                    <a href="javascript:;">密码修改</a>
                                 </li>
 
                                 <!-- 测试权限控制 -->
@@ -274,15 +274,11 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                             <ul class="page-breadcrumb breadcrumb">
                                 <li>
                                     <i class="fa fa-home"></i>
-                                    <a href="javascript:;">
-                                        首页
-                                    </a>
+                                    <a href="javascript:;">首页</a>
                                     <i class="fa fa-angle-right"></i>
                                 </li>
                                 <li>
-                                    <a href="javascript:;">
-                                        Dashboard
-                                    </a>
+                                    <a href="javascript:;">Dashboard</a>
                                 </li>
                             </ul>
                             <!-- END PAGE TITLE & BREADCRUMB-->
@@ -330,7 +326,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
         <!--Begin Test -->
         <script type="text/javascript">
-        	alert("SSS");
+
         </script>
 		<!--End Test -->
 

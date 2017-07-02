@@ -85,7 +85,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 		<div class="form-group">
 			<label class="control-label visible-ie8 visible-ie9">验证码</label>
 			<div class="input-icon">
-				<i class="fa fa-asterisk"></i>
+				<i class="fa fa-keyboard-o"></i>
 				<input name="vcode" id="vcode" size="25" value="" class="form-control-half placeholder-no-fix" type="text" autocomplete="off" placeholder="验证码" />
 				<img alt="验证码" id="vcodeImg" src="rest/getGifCode" align="right">
 				<div style="clear:both"></div>
@@ -93,7 +93,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 		</div>
 		<div class="form-actions">
 			<label class="checkbox">
-			<input type="checkbox" name="rememberMeParam" value="true"/> 记住我 </label>
+			<input type="checkbox" name="rememberMe" value="true"/> 记住我 </label>
 			<button id="loginBut" type="submit" class="btn blue pull-right">
 			登录 <i class="m-icon-swapright m-icon-white"></i>
 			</button>

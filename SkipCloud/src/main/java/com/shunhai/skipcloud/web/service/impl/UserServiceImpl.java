@@ -107,4 +107,9 @@ public class UserServiceImpl extends GenericServiceImpl<User, Long> implements U
 		}
 		return a;
 	}
+
+	@Override
+	public List<User> selectAllByUsername(String username) {
+		return userMapper.selectAllByUsername(username);
+	}
 }

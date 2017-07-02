@@ -23,6 +23,8 @@ public class User {
 
     private String country;
 
+    private boolean rememberMe;
+
 
     public User() {
 	}
@@ -125,5 +127,13 @@ public class User {
 
 	public void setCountry(String country) {
 		this.country = country;
+	}
+
+	public boolean isRememberMe() {
+		return rememberMe;
+	}
+
+	public void setRememberMe(boolean rememberMe) {
+		this.rememberMe = rememberMe;
 	}
 }

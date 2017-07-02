@@ -30,10 +30,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
 
+import com.shunhai.skipcloud.core.util.IPUtils;
 import com.shunhai.skipcloud.core.util.SimpleMailSender;
+import com.shunhai.skipcloud.web.model.IpLocation;
 import com.shunhai.skipcloud.web.model.User;
 import com.shunhai.skipcloud.web.security.PermissionSign;
 import com.shunhai.skipcloud.web.security.RoleSign;
+import com.shunhai.skipcloud.web.service.IpLocationService;
 import com.shunhai.skipcloud.web.service.UserService;
 
 /**
@@ -45,10 +48,15 @@ public class UserController {
 
     @Resource
     private UserService userService;
-    
+
+
     @Resource(name="shiroEhcacheManager")
     private CacheManager cacheManager;
     private Cache<String,String> changePasswordCache;
+
+    @Resource
+    private IpLocationService ipLocationService;
+
 
     /**
      * 用户登录
@@ -75,12 +83,22 @@ public class UserController {
                 model.addAttribute("error", "用户参数错误！");
                 return "login";
             }
-            System.out.println("login"+user.getPassword());
+
+            //设置rememberMe
+            UsernamePasswordToken shiroToken = new UsernamePasswordToken(user.getUsername(), user.getPassword());
+            shiroToken.setRememberMe(user.isRememberMe());
+
             // 身份验证
-            subject.login(new UsernamePasswordToken(user.getUsername(), user.getPassword()));
+            subject.login(shiroToken);
             // 验证成功在Session中保存用户信息
             final User authUserInfo = userService.selectByUsername(user.getUsername());
             WebUtils.setSessionAttribute(request, "userInfo", authUserInfo);
+
+            String ip = IPUtils.getIP(request);
+            System.out.println(ip);
+            IpLocation ipLocation = ipLocationService.selectByIp(ip);
+            System.out.println(ipLocation.getId()+":"+ipLocation.getAddress()+"--"+ipLocation.getCompany());
+
         } catch ( LockedAccountException e ) {
     	    error = "登录失败3次，账户已被锁定 ，请3分钟后再试！";
         } catch ( DisabledAccountException e ) {
@@ -225,5 +243,29 @@ public class UserController {
     		model.addAttribute("error", "此链接已失效，请重新申请改密！");
     		return "changePassword";
     	}
+    }
+
+    /**
+     * 显示所有用户
+     */
+    @RequestMapping(value = "/userList")
+    public String userList(Model model){
+    	List<User> userList = userService.selectList();
+    	model.addAttribute("userList", userList);
+    	return "user/userList";
+    }
+
+    /**
+     * 根据用户名查找用户
+     */
+    @RequestMapping(value = "/findUser")
+    public String findUser(User user, Model model){
+    	List<User> userList = userService.selectAllByUsername(user.getUsername());
+    	if(null == userList || userList.size()==0){
+    		model.addAttribute("error", "没有匹配的用户名 ！");
+    	}else{
+    		model.addAttribute("userList", userList);
+    	}
+    	return "user/userList";
     }
 }

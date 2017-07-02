@@ -21,11 +21,13 @@ public interface UserMapper extends GenericDao<User, Long>{
 	User authentication(User user);
 
 	User selectByUsername(String username);
-	
+
 	List<User> checkUsername(String username);
-	
+
 	List<User> checkByEmail(String email);
 
 	void changPassword(User user);
+
+	List<User> selectAllByUsername(String username);
 
 }

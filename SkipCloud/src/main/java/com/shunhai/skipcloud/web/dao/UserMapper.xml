@@ -7,9 +7,14 @@
     <result column="password" property="password" jdbcType="CHAR" />
     <result column="state" property="state" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="full_name" property="fullname" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, username, password, state, create_time
+    id, username, password, state, create_time, full_name, email, address, city, country
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select
@@ -23,7 +28,7 @@
   </delete>
   <insert id="insert" parameterType="com.shunhai.skipcloud.web.model.User" >
     insert into user (id, username, password,
-      state, create_time,fullname,email,address,city,country)
+      state, create_time,full_name,email,address,city,country)
     values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=CHAR},
       #{state,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{fullname,jdbcType=VARCHAR},
       #{email,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},#{city,jdbcType=VARCHAR},
@@ -104,6 +109,12 @@
     from user
     where username = #{username,jdbcType=VARCHAR}
   </select>
+  <select id="selectAllByUsername" resultMap="BaseResultMap" parameterType="String" >
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where username like "%"#{username,jdbcType=VARCHAR}"%"
+  </select>
   <select id="checkUsername" resultMap="BaseResultMap" parameterType="String" >
     select
     <include refid="Base_Column_List" />
@@ -117,18 +128,14 @@
     where email = #{email,jdbcType=VARCHAR}
   </select>
   <update id="changPassword"  parameterType="com.shunhai.skipcloud.web.model.User">
- UPDATE user
- set
- password = #{password,jdbcType=CHAR}
- <!--  
-  <if test="username!=null">username=#{username,jdbcType=VARCHAR},</if>
-  
-  <if test="state!=null">state=#{state,jdbcType=VARCHAR},</if>
-  <if test="createTime!=null">createTime=#{createTime,jdbcType=TIMESTAMP},</if>
-  <if test="fullname!=null">fullname=#{fullname,jdbcType=VARCHAR},</if>
-  <if test="address!=null">STATUS=#{status,jdbcType=VARCHAR},</if>
-  <if test="city!=null">city=#{city,jdbcType=VARCHAR},</if>
-  <if test="country!=null">country=#{country,jdbcType=VARCHAR},</if> -->
- WHERE email=#{email,jdbcType=VARCHAR}
-</update>
+	 UPDATE user
+	 set
+	 password = #{password,jdbcType=CHAR}
+	 WHERE email=#{email,jdbcType=VARCHAR}
+  </update>
+  <select id="selectList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+  </select>
 </mapper>
